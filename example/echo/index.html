@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Websocket Echo</title>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+
+            const websocket = new WebSocket("ws://127.0.0.1:8080/ws");
+
+            websocket.onopen = () => {
+                console.log("New connection.");
+            };
+
+            websocket.onclose = (event) => {
+                if (event.wasClean) {
+                    console.log('closed');
+                } else {
+                    console.log('Oops');
+                }
+                console.log('Code: ' + event.code + ' reason: ' + event.reason);
+            };
+
+            websocket.onmessage = (event) => {
+
+                console.log("Catch new message, " + event.data);
+                document.querySelector('#result').addEventListener('click', (e) => {
+                    e.target.value = event.data;
+                })
+
+            };
+
+            websocket.onerror = (error) => {
+                console.log("Error " + error.message);
+            };
+
+            const message = {
+                method: "echo", params: {
+                    hello: "world"
+                }
+            };
+
+            document.querySelector('#send-echo').addEventListener('click', () => {
+                console.log("send new message", message);
+                websocket.send(JSON.stringify(message))
+            });
+
+            document.querySelector('#send-string').addEventListener('click', () => {
+                websocket.send("it is the bytes handler")
+            })
+
+        });
+    </script>
+
+</head>
+<body>
+
+<div>
+    <button id="send-echo">Send echo</button>
+    <button id="send-string">Send string</button>
+</div>
+<div>
+    <textarea id="result"></textarea>
+</div>
+</body>
+</html>
