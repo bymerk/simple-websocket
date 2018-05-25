@@ -1,6 +1,6 @@
-### Simple websocket server
+# Simple websocket server
 
-
+## Example
 ```
     ws := simpleWebsocket.New()
         
@@ -21,6 +21,9 @@
         c.SendString("see you later")
     })
     
-    
     ws.Run(":8080")
+```
+## Install
+```$xslt
+go get github.com/bymerk/simple-websocket
 ```
