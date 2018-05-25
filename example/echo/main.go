@@ -6,6 +6,7 @@ import (
 )
 
 func main()  {
+
 	ws := simpleWebsocket.New()
 
 	ws.OnConnect(func(c *simpleWebsocket.Client) {
@@ -24,7 +25,6 @@ func main()  {
 	ws.OnDisconnect(func(c *simpleWebsocket.Client) {
 		c.SendString("see you later")
 	})
-
 
 	ws.Run(":8080")
 }

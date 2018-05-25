@@ -20,7 +20,7 @@ type Server struct {
 
 type Message struct {
 	Method string      `json:"method"`
-	Params interface{} `json:"params"`
+	Params json.RawMessage `json:"params"`
 }
 
 type handleClient func(c *Client)
